@@ -1,0 +1,39 @@
+// fonts
+
+@use 'sass:map';
+
+$fonts: (
+  'mononoki': (
+    'regular': (
+      path-ttf: '/assets/fonts/mononoki-Regular.ttf'
+    ),
+    'italic': (
+      path-ttf: '/assets/fonts/mononoki-Italic.ttf'
+    ),
+    'bold': (
+      path-ttf: '/assets/fonts/mononoki-Bold.ttf'
+    ),
+    'bold italic': (
+      path-ttf: '/assets/fonts/mononoki-BoldItalic.ttf'
+    ),
+  ),
+);
+
+$variant-styles: (
+  'regular': (style: normal, weight: 400),
+  'italic': (style: italic, weight: 400),
+  'bold': (style: normal, weight: 900),
+  'bold italic': (style: italic, weight: 900),
+);
+
+@each $font-name, $variants in $fonts {
+  @each $variant, $props in $variants {
+    @font-face {
+      font-family: "#{$font-name}";
+      font-style: map.get(map.get($variant-styles, $variant), style);
+      font-weight: map.get(map.get($variant-styles, $variant), weight);
+      src: url('#{map.get($props, path-ttf)}') format('truetype');
+      font-display: swap;
+    }
+  }
+}

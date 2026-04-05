@@ -1,0 +1,43 @@
+# my Caddyfile
+
+{
+    log default {
+        output stderr
+        format json
+    }
+    import Caddyfile-local-global
+}
+
+(site) {
+    log default
+    encode
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+    @httpsable {
+        protocol http
+        header Upgrade-Insecure-Requests 1
+    }
+    redir @httpsable https://{host}{uri} permanent
+}
+
+https://share.noroutine.sh {
+    import site
+    reverse_proxy localhost:7000
+    #respond 404
+}
+
+http://www.noroutine.sh, https://www.noroutine.sh {
+    import site
+    redir {scheme}://noroutine.sh{uri} permanent
+}
+
+http://noroutine.sh, https://noroutine.sh {
+    import site
+    handle_path /yapper/* {
+        reverse_proxy localhost:5000
+    }
+    file_server {
+        root /var/www/blog
+    }
+}

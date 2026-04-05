@@ -1,0 +1,150 @@
+/* styles */
+
+@layer reset, tailwind, theme, custom;
+
+@layer reset {
+    @import "reset.scss";
+}
+
+@layer theme {
+
+    @import "hljs-theme.scss";
+
+    @import "font.scss";
+
+    :root {
+
+        // Theme
+        & {
+            --color-bg: #282828;
+            --color-bg-elevated: #181818;
+            --color-text: #bbb;
+            --color-text-emphasis: #fff;
+            --color-accent: #daa520;
+        }
+
+        // Font
+        & {
+            font-family: mononoki, serif;
+            pre, code {
+                font-family: mononoki, monospace;
+            }
+        }
+
+    }
+
+}
+
+@layer custom {
+
+    // Markdown styling
+    .post-container {
+
+        // Theme
+        & {
+
+            // Links
+            a {
+                text-decoration-color: var(--color-accent);
+                &:hover {
+                    color: var(--color-text-emphasis);
+                }
+            }
+
+            // Lists
+            ul {
+                list-style-type: square;
+            }
+            ol {
+                list-style-type: decimal;
+            }
+
+            // Blockquotes
+            blockquote {
+                border-style: solid;
+                border-color: var(--color-accent);
+            }
+
+            // Code blocks, Inline code blocks
+            code {
+                background-color: var(--color-bg-elevated);
+            }
+
+            // Blockquotes
+            blockquote {
+                background-color: var(--color-bg-elevated);
+            }
+
+        }
+
+        // Layout
+        & {
+
+            // Blocks
+            @each $tag in ('div', 'p', 'ul', 'ol', 'li', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table', 'pre', 'address', 'fieldset',) {
+                #{$tag} {
+                    &:not(:last-child) {
+                        margin-bottom: 1rem;
+                    }
+                }
+            }
+
+            // Headings
+            @each $tag, $size in ('h1': '2rem', 'h2': '1.5rem', 'h3': '1.17rem', 'h4': '1rem', 'h5': '0.83rem', 'h6': '0.67rem',) {
+                #{$tag} {
+                    font-size: #{$size};
+                }
+            }
+
+            // Links
+            a {
+                transition: all;
+                text-decoration-line: underline;
+                text-decoration-thickness: 0.1rem;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+
+            // Lists
+            ul, ol {
+                list-style-position: inside;
+                li {
+                    display: block;
+                    padding-left: 2rem;
+                    position: relative;
+                    &::before {
+                        display: list-item;
+                        position: absolute;
+                        transform: translate(-100%, 0rem);
+                        content: "";
+                    }
+                }
+            }
+
+            // Blockquotes
+            blockquote {
+                padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+                border-left-width: 0.5rem;
+                border-radius: 0.25rem;
+            }
+
+            // Code blocks
+            pre > code {
+                display: block;
+                overflow-x: auto;
+                padding: 1rem;
+                border-radius: 0.5rem;
+            }
+
+            // Inline code blocks
+            :not(pre) > code {
+                padding: 0.1rem 0.25rem;
+                border-radius: 0.25rem;
+            }
+
+        }
+
+    }
+
+}

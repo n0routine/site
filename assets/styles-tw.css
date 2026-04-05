@@ -1,0 +1,5 @@
+/* styles */
+
+/* TODO move tailwind rule to scss when plugin is fixed */
+
+@import "tailwindcss" layer(tailwind);
